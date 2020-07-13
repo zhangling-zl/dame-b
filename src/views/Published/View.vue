@@ -1,18 +1,15 @@
 <template>
  <div>
-  <PublishedAll></PublishedAll>
+
  </div>
 </template>
 
 <script>
-import axios from 'axios'
-import PublishedAll from '../../components/publishedA/PublishedAll'
  export default {
    name: '',
    props: {
    },
    components: {
-     PublishedAll,
 
    },
    data () {

@@ -19,6 +19,10 @@ import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
 
 
+//mavon-editor(markdown编辑器)
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
 
 new Vue({
   router,

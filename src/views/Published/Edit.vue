@@ -2,12 +2,9 @@
   <div>
     <div class="box">
       <div class="p20">
-        <div class="flex j-b plr20" style="background-color: rgb(89,165,134)">
-          <div></div>
-          <div class="mtb5">
-            <el-button type="danger" size="small" @click="view">查看</el-button>
-            <el-button type="primary" size="small" @click="release">发布</el-button>
-          </div>
+        <div class="flex j-a plr20">
+          <el-button type="danger" size="small" >返回</el-button>
+          <el-button type="primary" size="small" >发布</el-button>
         </div>
         <div class="form mt20">
           <el-form
@@ -62,11 +59,6 @@
             <el-form-item prop="text">
               <mavon-editor v-model="ruleForm.text" />
             </el-form-item>
-            <div class="w100% flex j-c">
-              <el-form-item>
-                <el-button type="primary" @click="release">发布</el-button>
-              </el-form-item>
-            </div>
           </el-form>
         </div>
       </div>
@@ -82,16 +74,9 @@ export default {
   components: {},
   data() {
     return {
-      ruleForm: {
-        title: "",
-        abstract: "",
-        author: "",
-        category: "",
-        source: "",
-        star: "",
-        date: "",
-        text: ""
-      },
+      id: "",
+      value: "",
+      ruleForm:{},
       rules: {
         title: [
           { required: true, message: "文章标题不能为空", trigger: "blur" }
@@ -111,83 +96,25 @@ export default {
     };
   },
   methods: {
-    //点击发布文章
-    release() {
-      //拿到对象ruleForm的dome元素
-      this.$refs.ruleForm.validate(valid => {
-        //如果验证条件都通过的时候，执行下面的操作
-        if (valid) {
-          //post请求，传两个参数，第一个路径，第二个传一个对象，输入的值
-          axios
-            .post("/api/article/create", {
-              title: this.ruleForm.title,
-              abstract: this.ruleForm.abstract,
-              author: this.ruleForm.author,
-              category: this.ruleForm.category,
-              source: this.ruleForm.source,
-              star: this.ruleForm.star,
-              date: this.ruleForm.date,
-              text: this.ruleForm.text
-            })
-            .then(res => {
-              console.log(res.data);
-              //这个请求code===200的时候，表示请求成功
-              if (res.data.code === 200) {
-                //弹框发布成功
-                this.$message.success("发布成功"),
-                  //将输入的数据存在localStorage里面
-                  localStorage.setItem("create", JSON.stringify(this.ruleForm)),
-                  //然后清空输入框
-                  (this.ruleForm.title = ""),
-                  (this.ruleForm.abstract = ""),
-                  (this.ruleForm.author = ""),
-                  (this.ruleForm.category = ""),
-                  (this.ruleForm.source = ""),
-                  (this.ruleForm.star = ""),
-                  (this.ruleForm.date = "");
-                this.ruleForm.text = "";
-                //最后跳转到已发布页面
-                this.$router.push("/published");
-              } else {
-                //否则代表请求失败
-                this.$message.error(res.data.message),
-                  //然后清空输入框
-                  (this.ruleForm.title = ""),
-                  (this.ruleForm.abstract = ""),
-                  (this.ruleForm.author = ""),
-                  (this.ruleForm.category = ""),
-                  (this.ruleForm.source = ""),
-                  (this.ruleForm.star = ""),
-                  (this.ruleForm.date = "");
-                this.ruleForm.text = "";
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            });
-          //如果验证条件不通过的时候，执行下面的操作
-          //清空输入框
-          //弹框文章内容填写有误，请检查
-        } else {
-          (this.ruleForm.title = ""),
-            (this.ruleForm.abstract = ""),
-            (this.ruleForm.author = ""),
-            (this.ruleForm.category = ""),
-            (this.ruleForm.source = ""),
-            (this.ruleForm.star = ""),
-            (this.ruleForm.date = "");
-          this.ruleForm.text = "";
-          this.$message.error("文章内容填写有误，请检查");
-          return false;
-        }
-      });
-    },
-    //点击跳转到已发布页面
-    view() {
-      this.$router.push("/published");
-    }
+
   },
-  mounted() {},
+  mounted() {
+    //接收已发布页面传过来的id值
+    this.id = this.$route.query.id;
+    console.log(this.$route);
+    //查看单个文章
+    axios
+      .post("/api/article/article", {
+        _id: this.id
+      })
+      .then(res => {
+        console.log(res);
+        this.ruleForm = res.data.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
   watch: {},
   computed: {}
 };

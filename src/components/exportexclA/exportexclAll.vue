@@ -15,7 +15,7 @@
           <el-table-column prop label="操作" align="center">
             <template slot-scope="scope">
               <el-button type="primary" size="medium" @click="modify(scope.$index, scope.row)">
-                <i class="el-icon-edit mr5"></i>修改
+                <i class="el-icon-edit mr5"></i>编辑
               </el-button>
               <el-button type="danger" size="medium" @click="dli(scope.$index, scope.row)">
                 <i class="el-icon-delete mr5"></i>删除

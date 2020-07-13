@@ -99,7 +99,7 @@ export default {
         .get("/api/progress")
         .then(res => {
           if (res.data.code === 0) {
-            console.log(res.data);
+            // console.log(res.data);
             this.title = res.data.data;
           }
           console.log(res.data);
@@ -113,7 +113,7 @@ export default {
       axios
         .get("/api/todoList")
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.code === 0) {
             // console.log(res.data);
             this.todolist = res.data.data;
@@ -157,12 +157,7 @@ img {
   width: 100%;
   height: 100%;
 }
-.text1 {
-  color: rgb(94, 75, 134);
-}
-.text2 {
-  color: rgb(94, 75, 134);
-}
+
 .from {
   border-bottom: 1px solid #ccc;
 }
@@ -177,7 +172,7 @@ img {
   width: 40px;
   height: 24px;
   border: 1px solid rgb(241, 219, 219);
-  color: rgb(94, 75, 134);
+  
 }
 .icon {
   display: none;

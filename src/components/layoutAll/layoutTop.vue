@@ -54,7 +54,7 @@ export default {
   },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user")); //拿到本地存储的数据
-    console.log(this.user);
+    // console.log(this.user);
     this.time = dayjs(this.user.date).format("YYYY年MM月DD日HH时mm分ss秒"); //拿到登录时间
     // console.log(this.time);
     this.getTime()

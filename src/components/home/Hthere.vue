@@ -49,7 +49,7 @@ export default {
         .then(res => {
           //   console.log(res.data);
           if (res.data.code === 0) {
-            console.log(res.data);
+            // console.log(res.data);
             this.chartData1.columns = Object.keys(res.data.data[0]); //Object.keys代表对象的title（名字）
             this.chartData1.rows = res.data.data; //给chartData里面的rows赋值等于这个数据
           }
